@@ -9,7 +9,7 @@
 
 Name:           breezy-desktop
 Version:        2.12.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        XR virtual desktop for GNOME and KDE Plasma
 License:        GPL-3.0-or-later
 URL:            https://github.com/wheaney/breezy-desktop
@@ -19,6 +19,8 @@ ExclusiveArch:  x86_64 aarch64
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:        https://github.com/wheaney/sombrero/archive/%{commit1}.tar.gz#/sombrero-%{shortcommit1}.tar.gz
 Source2:        https://github.com/wheaney/PyXRLinuxDriverIPC/archive/%{commit2}.tar.gz#/PyXRLinuxDriverIPC-%{shortcommit2}.tar.gz
+Source3:        com.xronlinux.BreezyDesktop.metainfo.xml
+Source4:        com.xronlinux.BreezyDesktop.KWin.metainfo.xml
 Patch0:         %{name}-system-paths.patch
 Patch1:         %{name}-virtualdisplayrow.patch
 
@@ -30,8 +32,10 @@ BuildRequires:  gettext
 BuildRequires:  glib2-devel
 BuildRequires:  gtk-update-icon-cache
 BuildRequires:  kwin-devel
+BuildRequires:  libappstream-glib
 BuildRequires:  libdrm-devel
 BuildRequires:  libepoxy-devel
+BuildRequires:  librsvg2-tools
 BuildRequires:  libxcb-devel
 BuildRequires:  meson
 BuildRequires:  pkgconfig(wayland-server)
@@ -146,10 +150,20 @@ rm -fr %{buildroot}%{_datadir}/gnome-shell/extensions/%{uuid}/schemas
 install -p -m 0755 -D gnome/bin/breezy_gnome_logs %{buildroot}%{_bindir}/breezy_gnome_logs
 install -p -m 0755 -D kwin/bin/breezy_kwin_logs %{buildroot}%{_bindir}/breezy_kwin_logs
 
+# Replaces the upstream file
+install -p -m 0644 %{SOURCE3} %{SOURCE4} %{buildroot}%{_metainfodir}/
+
+for size in 64 128 256; do
+    mkdir -p %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps
+    rsvg-convert -w $size -h $size ui/data/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg \
+        -o %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/com.xronlinux.BreezyDesktop.png
+done
+
 %find_lang breezydesktop
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+appstream-util validate --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files gnome -f breezydesktop.lang
 %license LICENSE
@@ -161,7 +175,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/breezydesktop
 %{_datadir}/glib-2.0/schemas/com.xronlinux.BreezyDesktop.gschema.xml
 %{_datadir}/gnome-shell/extensions/%{uuid}
-%{_datadir}/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg
+%{_datadir}/icons/hicolor/*/apps/com.xronlinux.BreezyDesktop.*
 %{_metainfodir}/com.xronlinux.BreezyDesktop.metainfo.xml
 
 %files kwin
@@ -169,12 +183,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %doc README.md
 %{_bindir}/breezy_kwin_logs
 %{_kf6_datadir}/applications/breezy_desktop.desktop
-%{_kf6_datadir}/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg
+%{_kf6_datadir}/icons/hicolor/*/apps/com.xronlinux.BreezyDesktop.*
 %{_kf6_datadir}/kwin/effects/breezy_desktop
 %{_kf6_qtplugindir}/kwin/effects/plugins/breezy_desktop.so
 %{_kf6_qtplugindir}/plasma/kcms/breezy_desktop_config.so
+%{_metainfodir}/com.xronlinux.BreezyDesktop.KWin.metainfo.xml
 
 %changelog
+* Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-4
+- Add AppStream metadata for the KWin effect, replace the GNOME one.
+- Add PNG icons.
+
 * Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-3
 - Require xr-driver.
 

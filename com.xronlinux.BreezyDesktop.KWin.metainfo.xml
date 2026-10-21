@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.xronlinux.BreezyDesktop.KWin</id>
+  <name>Breezy Desktop</name>
+  <summary>XR virtual desktop for KDE Plasma</summary>
+  <developer id="com.xronlinux">
+    <name>Wayne Heaney</name>
+  </developer>
+  <!-- appstream-builder drops <developer> from the repository catalog -->
+  <developer_name>Wayne Heaney</developer_name>
+  <launchable type="desktop-id">breezy_desktop.desktop</launchable>
+  <description>
+    <p>Breezy Desktop turns supported XR glasses from VITURE, XREAL, Rokid and TCL/RayNeo into a virtual desktop, with multiple displays anchored in space around you.</p>
+    <p>This package contains the KWin effect and its configuration module.</p>
+    <p>The virtual desktop features come with a free trial, after which a Productivity license from the author is required.</p>
+  </description>
+  <categories>
+    <category>Utility</category>
+  </categories>
+  <keywords>
+    <keyword>AR</keyword>
+    <keyword>glasses</keyword>
+    <keyword>KWin effect</keyword>
+    <keyword>RayNeo</keyword>
+    <keyword>Rokid</keyword>
+    <keyword>virtual desktop</keyword>
+    <keyword>virtual display</keyword>
+    <keyword>VITURE</keyword>
+    <keyword>XR</keyword>
+    <keyword>XREAL</keyword>
+  </keywords>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="2.12.2" date="2026-09-15"/>
+  </releases>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <url type="homepage">https://github.com/wheaney/breezy-desktop</url>
+  <url type="bugtracker">https://github.com/wheaney/breezy-desktop/issues</url>
+  <url type="donation">https://ko-fi.com/wheaney</url>
+  <update_contact>negativo17@gmail.com</update_contact>
+</component>

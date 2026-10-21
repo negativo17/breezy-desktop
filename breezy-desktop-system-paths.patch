@@ -1,0 +1,57 @@
+diff --git a/ui/data/com.xronlinux.BreezyDesktop.desktop.in b/ui/data/com.xronlinux.BreezyDesktop.desktop.in
+index 0cee462..abf9ab2 100644
+--- a/ui/data/com.xronlinux.BreezyDesktop.desktop.in
++++ b/ui/data/com.xronlinux.BreezyDesktop.desktop.in
+@@ -1,6 +1,6 @@
+ [Desktop Entry]
+ Name=Breezy Desktop
+-Exec=breezydesktop
++Exec=breezydesktop --skip-verification
+ Icon=com.xronlinux.BreezyDesktop
+ Terminal=false
+ Type=Application
+diff --git a/ui/src/breezydesktop.in b/ui/src/breezydesktop.in
+index f7446da..eff4edd 100755
+--- a/ui/src/breezydesktop.in
++++ b/ui/src/breezydesktop.in
+@@ -22,10 +22,8 @@
+ import os
+ import sys
+ 
+-xdg_data_home = os.getenv('XDG_DATA_HOME', os.path.join(os.path.expanduser('~'), '.local', 'share'))
+-appdir = os.getenv('APPDIR', xdg_data_home) 
+-locale_dir = os.path.join(appdir, 'locale')
+-pkgdatadir = os.path.join(appdir, 'breezydesktop')
++locale_dir = '@localedir@'
++pkgdatadir = '@pkgdatadir@'
+ sys.path.insert(1, pkgdatadir)
+ 
+ lib_dir = os.path.join(pkgdatadir, 'breezydesktop', 'lib')
+diff --git a/ui/src/files.py b/ui/src/files.py
+index 367a39d..7e9e9c6 100644
+--- a/ui/src/files.py
++++ b/ui/src/files.py
+@@ -18,5 +18,4 @@ def get_data_home():
+     return os.getenv('APPDIR', os.path.expanduser(data_home))
+ 
+ def get_bin_home():
+-    bin_home = os.environ.get('XDG_BIN_HOME', '~/.local/bin')
+-    return os.getenv('BINDIR', os.path.expanduser(bin_home))
+\ No newline at end of file
++    return os.getenv('BINDIR', '/usr/bin')
+\ No newline at end of file
+diff --git a/ui/src/virtualdisplay.in b/ui/src/virtualdisplay.in
+index a84e98b..3c96f1b 100755
+--- a/ui/src/virtualdisplay.in
++++ b/ui/src/virtualdisplay.in
+@@ -23,9 +23,7 @@ import logging
+ import os
+ import sys
+ 
+-xdg_data_home = os.getenv('XDG_DATA_HOME', os.path.join(os.path.expanduser('~'), '.local', 'share'))
+-appdir = os.getenv('APPDIR', xdg_data_home) 
+-pkgdatadir = os.path.join(appdir, 'breezydesktop')
++pkgdatadir = '@pkgdatadir@'
+ sys.path.insert(1, pkgdatadir)
+ 
+ lib_dir = os.path.join(pkgdatadir, 'breezydesktop', 'lib')

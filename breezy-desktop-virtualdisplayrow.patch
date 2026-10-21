@@ -1,0 +1,12 @@
+diff --git a/ui/src/meson.build b/ui/src/meson.build
+index 95187b7..f967f94 100644
+--- a/ui/src/meson.build
++++ b/ui/src/meson.build
+@@ -64,6 +64,7 @@ breezydesktop_sources = [
+   'updatechecker.py',
+   'virtualdisplay.py',
+   'virtualdisplaymanager.py',
++  'virtualdisplayrow.py',
+   'verify.py',
+   'window.py'
+ ]

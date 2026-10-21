@@ -9,7 +9,7 @@
 
 Name:           breezy-desktop
 Version:        2.12.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        XR virtual desktop for GNOME and KDE Plasma
 License:        GPL-3.0-or-later
 URL:            https://github.com/wheaney/breezy-desktop
@@ -20,6 +20,7 @@ Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:        https://github.com/wheaney/sombrero/archive/%{commit1}.tar.gz#/sombrero-%{shortcommit1}.tar.gz
 Source2:        https://github.com/wheaney/PyXRLinuxDriverIPC/archive/%{commit2}.tar.gz#/PyXRLinuxDriverIPC-%{shortcommit2}.tar.gz
 Patch0:         %{name}-system-paths.patch
+Patch1:         %{name}-virtualdisplayrow.patch
 
 BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
@@ -54,24 +55,12 @@ Breezy Desktop is an XR desktop for supported XR glasses, providing virtual
 displays that are anchored in space. It requires XRLinuxDriver to be installed
 and running.
 
-%package        common
-Summary:        Common files for %{name}
-BuildArch:      noarch
-
-%description    common
-Breezy Desktop is an XR desktop for supported XR glasses, providing virtual
-displays that are anchored in space. It requires XRLinuxDriver to be installed
-and running.
-
-This package contains common files for the GNOME and KWin variants.
-
 %package        gnome
 Summary:        Breezy Desktop GNOME Shell extension and control panel
 %if 0%{?rhel}
 License:        GPL-3.0-or-later AND LGPL-2.1-or-later
 %endif
 BuildArch:      noarch
-Requires:       %{name}-common = %{version}-%{release}
 Requires:       gnome-shell >= 46
 Requires:       gstreamer1
 Requires:       gtk4
@@ -94,7 +83,6 @@ This package contains the GNOME Shell extension and its control panel.
 
 %package        kwin
 Summary:        Breezy Desktop KWin effect
-Requires:       %{name}-common = %{version}-%{release}
 Requires:       kwin-common%{?_isa}
 Requires:       python3
 Requires:       qt6-qtquick3d%{?_isa}
@@ -161,12 +149,9 @@ install -p -m 0755 -D kwin/bin/breezy_kwin_logs %{buildroot}%{_bindir}/breezy_kw
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
-%files common
+%files gnome -f breezydesktop.lang
 %license LICENSE
 %doc README.md
-%{_datadir}/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg
-
-%files gnome -f breezydesktop.lang
 %{_bindir}/breezy_gnome_logs
 %{_bindir}/breezydesktop
 %{_bindir}/virtualdisplay
@@ -174,15 +159,23 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_datadir}/breezydesktop
 %{_datadir}/glib-2.0/schemas/com.xronlinux.BreezyDesktop.gschema.xml
 %{_datadir}/gnome-shell/extensions/%{uuid}
+%{_datadir}/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg
 %{_metainfodir}/com.xronlinux.BreezyDesktop.metainfo.xml
 
 %files kwin
+%license LICENSE
+%doc README.md
 %{_bindir}/breezy_kwin_logs
 %{_kf6_datadir}/applications/breezy_desktop.desktop
+%{_kf6_datadir}/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg
 %{_kf6_datadir}/kwin/effects/breezy_desktop
 %{_kf6_qtplugindir}/kwin/effects/plugins/breezy_desktop.so
 %{_kf6_qtplugindir}/plasma/kcms/breezy_desktop_config.so
 
 %changelog
+* Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-2
+- Drop common subpackage.
+- Install missing virtualdisplayrow module.
+
 * Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-1
 - First build.

@@ -9,7 +9,7 @@
 
 Name:           breezy-desktop
 Version:        2.12.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        XR virtual desktop for GNOME and KDE Plasma
 License:        GPL-3.0-or-later
 URL:            https://github.com/wheaney/breezy-desktop
@@ -67,6 +67,7 @@ Requires:       gtk4
 Requires:       libadwaita
 Requires:       pipewire-gstreamer
 Requires:       python3-gobject
+Requires:       xr-driver
 %if 0%{?fedora}
 Requires:       python3-gstreamer1
 Requires:       python3-pydbus
@@ -86,6 +87,7 @@ Summary:        Breezy Desktop KWin effect
 Requires:       kwin-common%{?_isa}
 Requires:       python3
 Requires:       qt6-qtquick3d%{?_isa}
+Requires:       xr-driver%{?_isa}
 
 %description    kwin
 Breezy Desktop is an XR desktop for supported XR glasses, providing virtual
@@ -173,6 +175,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{_kf6_qtplugindir}/plasma/kcms/breezy_desktop_config.so
 
 %changelog
+* Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-3
+- Require xr-driver.
+
 * Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-2
 - Drop common subpackage.
 - Install missing virtualdisplayrow module.

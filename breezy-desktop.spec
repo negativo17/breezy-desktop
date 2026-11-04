@@ -8,8 +8,8 @@
 %global uuid breezydesktop@xronlinux.com
 
 Name:           breezy-desktop
-Version:        2.12.2
-Release:        4%{?dist}
+Version:        2.12.3
+Release:        1%{?dist}
 Summary:        XR virtual desktop for GNOME and KDE Plasma
 License:        GPL-3.0-or-later
 URL:            https://github.com/wheaney/breezy-desktop
@@ -190,6 +190,9 @@ appstream-util validate --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/com.xronlinux.BreezyDesktop.KWin.metainfo.xml
 
 %changelog
+* Wed Nov 04 2026 Simone Caronni <negativo17@gmail.com> - 2.12.3-1
+- Update to 2.12.3.
+
 * Wed Oct 21 2026 Simone Caronni <negativo17@gmail.com> - 2.12.2-4
 - Add AppStream metadata for the KWin effect, replace the GNOME one.
 - Add PNG icons.

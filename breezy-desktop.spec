@@ -8,7 +8,7 @@
 %global uuid breezydesktop@xronlinux.com
 
 Name:           breezy-desktop
-Version:        2.12.3
+Version:        2.12.4
 Release:        1%{?dist}
 Summary:        XR virtual desktop for GNOME and KDE Plasma
 License:        GPL-3.0-or-later
@@ -190,6 +190,9 @@ appstream-util validate --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/com.xronlinux.BreezyDesktop.KWin.metainfo.xml
 
 %changelog
+* Fri Nov 06 2026 Simone Caronni <negativo17@gmail.com> - 2.12.4-1
+- Update to 2.12.4.
+
 * Wed Nov 04 2026 Simone Caronni <negativo17@gmail.com> - 2.12.3-1
 - Update to 2.12.3.
 
